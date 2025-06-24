@@ -1,0 +1,7 @@
+# Python bytecode
+*.pyc
+*.pyo
+
+
+# .env files
+*.env

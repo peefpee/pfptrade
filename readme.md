@@ -1,0 +1,5 @@
+/priceapi/.env : 
+MT5LOGIN=
+MT5PASSWORD=
+MT5SERVER=
+
