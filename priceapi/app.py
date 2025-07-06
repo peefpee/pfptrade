@@ -1,8 +1,17 @@
 from fastapi import FastAPI,WebSocket, WebSocketDisconnect
 import metatraderconnection
+from fastapi.responses import JSONResponse
+from fastapi import HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 import os,asyncio,json
 app = FastAPI()
-print(os.getenv("MT5LOGIN"))
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://127.0.0.1:8001"],  # frontend site origin
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 mt5 = metatraderconnection.metatrader()
 mt5.initialize()
 
@@ -37,3 +46,15 @@ def get_symbols():
         return {"symbols": symbols}
     except Exception as e:
         return {"error": str(e)}
+@app.get("/api/history/{symbol}/{timeframe}")
+def get_history(symbol: str, timeframe: int):
+    """
+    Get historical candles for a symbol and timeframe.
+    """
+    try:
+        mt_timeframe = mt5.timeframe(timeframe)
+        candles = mt5.symbol_info_history(symbol, mt_timeframe, count=500)
+        return JSONResponse(content=candles)
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PFPTrade</title>
+  <link rel="stylesheet" href="/static/css/output.css">
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body class="bg-base-200 p-6">
+    {% if status %}
+    <input type="checkbox" id="success-modal" class="modal-toggle" checked hidden>
+    <div class="modal" role="dialog">
+    <div class="modal-box">
+        <h3 class="font-bold text-lg">Account Created</h3>
+        <p class="py-4">Your account has been registered successfully.</p>
+        <p class="py-4">You can now log in with your details</p> 
+        <a href="/login">here.</a>
+        <div class="modal-action">
+        <label for="success-modal" class="btn">OK</label>
+        </div>
+    </div>
+    </div>
+    {% endif %}
+    <div class="card w-96 bg-base-100 shadow-sm">
+        <div class="card-body">
+            <h2 class="card-title">Register</h2>
+            <form method="POST" action="/signup" class="flex flex-col gap-4">
+
+                <div class="form-control">
+                    <label class="label">
+                    <span class="label-text">Username</span>
+                    </label>
+                    <input type="text" name="username" class="input input-bordered" required />
+                </div>
+
+                <div class="form-control">
+                    <label class="label">
+                    <span class="label-text">Email</span>
+                    </label>
+                    <input type="email" name="email" class="input input-bordered" required />
+                </div>
+
+                <div class="form-control">
+                    <label class="label">
+                    <span class="label-text">Password</span>
+                    </label>
+                    <input type="password" name="password" class="input input-bordered" required />
+                </div>
+                <div class="g-recaptcha" data-sitekey="{{sitekey}}"></div>
+                <button class="btn btn-primary mt-2" type="submit">Sign Up</button>
+            </form>
+        </div>
+
+    </div>
+</body>
+</html>

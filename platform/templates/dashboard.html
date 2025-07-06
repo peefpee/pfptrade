@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>PFPTrade Dashboard</title>
+  <link rel="stylesheet" href="/static/css/output.css">
+</head>
+<body class="bg-base-200 p-6">
+    <div class="navbar bg-base-100">
+        <div class="flex-1 navbar-start">
+            <a class="btn btn-ghost text-xl" href="/dashboard">Dashboard</a>
+        </div>
+        <div class="flex-1">
+            <a class="btn btn-ghost text-xl" href="/trade?symbol=BTCUSD.r&timeframe=60">Trade</a>
+        </div>
+
+
+        <div class="flex-none navbar-end">
+            <a href="/logout" class="btn btn-ghost text-xl">Logout</a>
+        </div>
+    </div>
+    <h1> Welcome, {{ userdata.username }}!</h1>
+
+
+
+
+
+</body>
+</html>

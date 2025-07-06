@@ -1,0 +1,34 @@
+{
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.10",
+    "@tailwindcss/vite": "^4.1.10",
+    "lightweight-charts": "^5.0.8"
+  },
+  "devDependencies": {
+    "daisyui": "^5.0.43",
+    "tailwindcss": "^4.1.10",
+    "vite": "^7.0.2"
+  },
+  "name": "pfptrade",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "/priceapi/.env : \r MT5LOGIN=\r MT5PASSWORD=\r MT5SERVER=",
+  "main": "index.js",
+  "scripts": {
+    "build:cssplatform": "npx @tailwindcss/cli -i platform/static/css/input.css -o platform/static/css/main.css",
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/peefpee/pfptrade.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/peefpee/pfptrade/issues"
+  },
+  "homepage": "https://github.com/peefpee/pfptrade#readme"
+
+}
