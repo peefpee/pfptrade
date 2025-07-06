@@ -131,3 +131,12 @@ async def trade(request: Request,symbol: str,timeframe: int = 60):
     if "_id" in user_data:
         user_data["_id"] = str(user_data["_id"])
     return templates.TemplateResponse("trade.html", {"request": request, "userdata": user_data,"priceapiurl": os.getenv("priceapiurl"),"symbol": symbol if symbol else "XAUUSD.r","timeframe": timeframe})
+@app.get("/tradetest")
+async def tradetest(request: Request,symbol: str,timeframe: int = 60):
+    user = get_current_user(request)
+    if not user:
+        return RedirectResponse(url="/login", status_code=303)
+    user_data = usersdatabase.getuserdetails(email=user)
+    if "_id" in user_data:
+        user_data["_id"] = str(user_data["_id"])
+    return templates.TemplateResponse("tradetest.html", {"request": request, "userdata": user_data,"priceapiurl": os.getenv("priceapiurl"),"symbol": symbol if symbol else "XAUUSD.r","timeframe": timeframe})

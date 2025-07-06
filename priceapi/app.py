@@ -42,7 +42,7 @@ async def websocket_ticks(websocket:WebSocket, symbol: str):
 @app.get('/api/symbols')
 def get_symbols():
     try:
-        symbols = mt5.getallsymbols()
+        symbols = mt5.get_all_symbols()
         return {"symbols": symbols}
     except Exception as e:
         return {"error": str(e)}

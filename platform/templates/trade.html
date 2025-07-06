@@ -5,6 +5,9 @@
   <title>PFPTrade - Trading</title>
   <link rel="stylesheet" href="/static/css/output.css">
   <script src="https://unpkg.com/lightweight-charts@4.1.0/dist/lightweight-charts.standalone.production.js"></script>
+
+  <!-- Tom Select CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
 </head>
 <body class="bg-base-200 min-h-screen flex flex-col">
     <!-- Navbar -->
@@ -14,6 +17,37 @@
         </div>
         <div class="navbar-end">
             <a href="/logout" class="btn btn-error">Logout</a>
+        </div>
+    </div>
+
+    <!-- Selectors -->
+    <div class="flex justify-center gap-4 mt-6">
+        <!-- Symbol Search Dropdown -->
+        <div class="form-control w-64">
+            <label class="label">
+                <span class="label-text">Pick a Symbol</span>
+            </label>
+            <select id="symbolSelect" class="select select-bordered w-full">
+                <option disabled selected>Loading symbols...</option>
+            </select>
+        </div>
+
+        <!-- Timeframe Dropdown -->
+        <div class="form-control w-64">
+            <label class="label">
+                <span class="label-text">Pick a Timeframe</span>
+            </label>
+            <select id="timeframeSelect" class="select select-bordered w-full">
+                <option disabled selected>Pick a timeframe</option>
+                <option value="60">1 Minute</option>
+                <option value="300">5 Minutes</option>
+                <option value="900">15 Minutes</option>
+                <option value="3600">1 Hour</option>
+                <option value="14400">4 Hours</option>
+                <option value="86400">1 Day</option>
+                <option value="604800">1 Week</option>
+                <option value="2592000">1 Month</option>
+            </select>
         </div>
     </div>
 
@@ -29,7 +63,13 @@
         const historyUrl = "{{ priceapiurl }}/api/history/{{symbol}}/{{timeframe}}";
         const symbol = "{{ symbol }}";
         const timeframe = "{{ timeframe }}";
+        const symbolsurl = "{{ priceapiurl }}/api/symbols";
     </script>
+
+    <!-- JS Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
+    <script src="/static/js/symbolstest.js"></script>
+    <script src="/static/js/timeframe.js"></script>
     <script src="/static/js/trade.js"></script>
 </body>
 </html>
