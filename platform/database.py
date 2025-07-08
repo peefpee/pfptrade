@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 import userclass
-
+import tradeclass
 class database:
     def __init__ (self, url: str,databasename:str = "database",collectionname:str = "users"):
         self.connectionurl = url
@@ -62,5 +62,18 @@ class database:
         
         if not user:
             return {"error": "User not found"}
-        
+        user = userclass.UserClass(**user)
+
         return user
+    def addorder(self,userid:int,order:tradeclass.order):
+        db = self.client[self.databasename]
+        collection = db[self.collectionname]
+        user = collection.find_one({"id": userid})
+        if not user:
+            return {"error": "User not found"}
+        if "orders" not in user:
+            user["orders"] = []
+        order_dict = order.model_dump()
+        user["orders"].append(order_dict)
+        collection.update_one({"id": userid}, {"$set": {"orders": user["orders"]}})
+        return order_dict["id"]

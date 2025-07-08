@@ -10,8 +10,9 @@ from datetime import datetime
 from itsdangerous import Signer, BadSignature
 signer = Signer(os.getenv("cookie_secret"))
 app = FastAPI()
-from routes import api
+from routes import api,trading
 app.include_router(api.router,tags=["api"])
+app.include_router(trading.router,tags=["trading"])
 usersdatabase = database.database(os.getenv("databaseurl"))
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
@@ -131,12 +132,3 @@ async def trade(request: Request,symbol: str,timeframe: int = 60):
     if "_id" in user_data:
         user_data["_id"] = str(user_data["_id"])
     return templates.TemplateResponse("trade.html", {"request": request, "userdata": user_data,"priceapiurl": os.getenv("priceapiurl"),"symbol": symbol if symbol else "XAUUSD.r","timeframe": timeframe})
-@app.get("/tradetest")
-async def tradetest(request: Request,symbol: str,timeframe: int = 60):
-    user = get_current_user(request)
-    if not user:
-        return RedirectResponse(url="/login", status_code=303)
-    user_data = usersdatabase.getuserdetails(email=user)
-    if "_id" in user_data:
-        user_data["_id"] = str(user_data["_id"])
-    return templates.TemplateResponse("tradetest.html", {"request": request, "userdata": user_data,"priceapiurl": os.getenv("priceapiurl"),"symbol": symbol if symbol else "XAUUSD.r","timeframe": timeframe})

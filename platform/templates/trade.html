@@ -68,8 +68,56 @@
 
     <!-- JS Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
-    <script src="/static/js/symbolstest.js"></script>
+    <script src="/static/js/symbols.js"></script>
     <script src="/static/js/timeframe.js"></script>
     <script src="/static/js/trade.js"></script>
+    <div class="container mx-auto p-6 bg-base-100 rounded-lg shadow mt-6">
+        <h2 class="text-xl font-bold mb-4">Place New Trade</h2>
+        <form id="newTradeForm" method="post" action="/trade/new/market" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Symbol -->
+            <div>
+                <label class="label"><span class="label-text">Symbol</span></label>
+                <select name="symbol" class="select select-bordered w-full">
+                    <option value="" disabled selected>Select Symbol</option>
+                    <option value="EURUSD.r">EURUSD</option>
+                    <option value="XAUUSD.r">XAUUSD</option>
+                    <!-- Add more dynamically if needed -->
+                </select>
+            </div>
+
+            <!-- Size -->
+            <div>
+                <label class="label"><span class="label-text">Lot Size</span></label>
+                <input type="number" step="0.01" name="size" placeholder="e.g. 0.01" class="input input-bordered w-full" required>
+            </div>
+
+            <!-- Order Type -->
+            <div>
+                <label class="label"><span class="label-text">Order Type</span></label>
+                <select name="order_type" id="orderTypeSelect" class="select select-bordered w-full">
+                    <option value="market" selected>Market</option>
+                    <option value="pending">Pending</option>
+                </select>
+            </div>
+
+            <!-- Pending Price -->
+            <div id="pendingPriceField" class="hidden">
+                <label class="label"><span class="label-text">Pending Price</span></label>
+                <input type="number" step="0.01" name="price" placeholder="e.g. 1950.00" class="input input-bordered w-full">
+            </div>
+            <!-- Trade Type -->
+            <div>
+                <label class="label"><span class="label-text">Trade Type</span></label>
+                <select name="trade_type" class="select select-bordered w-full">
+                    <option value="0" selected>Buy</option>
+                    <option value="1">Sell</option>
+                </select>
+
+            <!-- Submit -->
+            <div class="md:col-span-3 flex justify-end">
+                <button type="submit" class="btn btn-primary">Place Trade</button>
+            </div>
+        </form>
+    </div>
 </body>
 </html>

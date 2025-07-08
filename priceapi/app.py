@@ -39,6 +39,7 @@ async def websocket_ticks(websocket:WebSocket, symbol: str):
             await asyncio.sleep(1) 
     except WebSocketDisconnect:
         print(f"WebSocket disconnected: {symbol}")
+
 @app.get('/api/symbols')
 def get_symbols():
     try:
@@ -46,6 +47,21 @@ def get_symbols():
         return {"symbols": symbols}
     except Exception as e:
         return {"error": str(e)}
+@app.get("/api/price/{symbol}")
+def get_price(symbol: str):
+
+    try:
+        tick = mt5.symbol_info_tick(symbol)
+        if not tick:
+            raise HTTPException(status_code=404, detail=f"Symbol {symbol} not found")
+        return JSONResponse(content={
+            "symbol": symbol,
+            "bid": tick.bid,
+            "ask": tick.ask,
+            "time": tick.time
+        })
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 @app.get("/api/history/{symbol}/{timeframe}")
 def get_history(symbol: str, timeframe: int):
     """

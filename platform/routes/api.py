@@ -29,7 +29,8 @@ def currentuserdata(request: Request):
     user = get_current_user(request)
     if not user:
         return RedirectResponse(url="/login", status_code=303)
-    user_data = usersdatabase.getuserdetails(email=user)    
+    user_data = usersdatabase.getuserdetails(email=user)
+    user_data = user_data.model_dump()    
     if "_id" in user_data:
         user_data["_id"] = str(user_data["_id"])
     return JSONResponse(content=user_data)
