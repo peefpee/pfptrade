@@ -5,6 +5,7 @@ import os, requests, database
 from userclass import UserClass
 from datetime import datetime
 from itsdangerous import Signer, BadSignature
+import symbols
 from dotenv import load_dotenv
 load_dotenv("../.env")
 templates = Jinja2Templates(directory="templates")
@@ -34,3 +35,10 @@ def currentuserdata(request: Request):
     if "_id" in user_data:
         user_data["_id"] = str(user_data["_id"])
     return JSONResponse(content=user_data)
+@router.get("/api/availablesymbols")
+def availablesymbols(request: Request):
+    user = get_current_user(request)
+    if not user:
+        return RedirectResponse(url="/login", status_code=303)
+    symbollist = symbols.symbolinfo
+    return JSONResponse(content=symbollist)

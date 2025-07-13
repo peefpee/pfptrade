@@ -77,12 +77,37 @@
             <!-- Symbol -->
             <div>
                 <label class="label"><span class="label-text">Symbol</span></label>
-                <select name="symbol" class="select select-bordered w-full">
-                    <option value="" disabled selected>Select Symbol</option>
-                    <option value="EURUSD.r">EURUSD</option>
-                    <option value="XAUUSD.r">XAUUSD</option>
-                    <!-- Add more dynamically if needed -->
+                <select name="symbol" id="tradeSymbolSelect" class="select select-bordered w-full">
+                    <option disabled selected>Loading symbols...</option>
                 </select>
+
+                <script>
+                    let symbolData = {}; // Holds full symbol info from API
+
+                    document.addEventListener("DOMContentLoaded", function () {
+                        fetch("/api/availablesymbols")
+                            .then(res => res.json())
+                            .then(data => {
+                                symbolData = data; // Save for later use
+                                const select = document.getElementById("tradeSymbolSelect");
+                                select.innerHTML = ""; // Clear "Loading symbols..."
+
+                                // Add options dynamically
+                                Object.keys(data).forEach(key => {
+                                    const symbol = data[key];
+                                    const option = document.createElement("option");
+                                    option.value = symbol.symbol;
+                                    option.textContent = `${symbol.name} - ${symbol.description}`;
+                                    select.appendChild(option);
+                                });
+                            })
+                            .catch(err => {
+                                console.error("Failed to load symbols:", err);
+                                const select = document.getElementById("tradeSymbolSelect");
+                                select.innerHTML = '<option disabled selected>Error loading symbols</option>';
+                            });
+                    });
+                </script>
             </div>
 
             <!-- Size -->
